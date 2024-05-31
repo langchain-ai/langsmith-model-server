@@ -37,7 +37,6 @@ class CustomLLM(LLM):
         Returns:
             The model output as a string. Actual completions SHOULD NOT include the prompt.
         """
-        print(prompt)
         return prompt[: self.n]
 
     def _stream(
