@@ -1,17 +1,15 @@
 from fastapi import FastAPI
-from fastapi.responses import RedirectResponse
+from langchain_core.messages import HumanMessage
 from langserve import add_routes
-from custom_model import CustomLLM
+
+from app.custom_model import CustomLLM
 
 app = FastAPI()
 
-
-@app.get("/")
-async def redirect_root_to_docs():
-    return RedirectResponse("/docs")
-
-
-add_routes(app, CustomLLM(), path="/custom-llm")
+sugma=CustomLLM(n=2)
+sugma.invoke("help")
+sugma.invoke([HumanMessage("help")])
+add_routes(app, CustomLLM(n=2))
 
 if __name__ == "__main__":
     import uvicorn

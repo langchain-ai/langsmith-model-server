@@ -6,25 +6,13 @@ from langchain_core.outputs import GenerationChunk
 
 
 class CustomLLM(LLM):
-    """A custom chat model that echoes the first `n` characters of the input.
+    """A custom chat model.
 
-    When contributing an implementation to LangChain, carefully document
-    the model including the initialization parameters, include
-    an example of how to initialize the model and include any relevant
-    links to the underlying models documentation or API.
-
-    Example:
-
-        .. code-block:: python
-
-            model = CustomChatModel(n=2)
-            result = model.invoke([HumanMessage(content="hello")])
-            result = model.batch([[HumanMessage(content="hello")],
-                                 [HumanMessage(content="world")]])
+    This class is a template for creating custom chat models. It is a subclass of LLM and provides
+    the methods. Read more about
     """
 
     n: int
-    """The number of characters from the last message of the prompt to be echoed."""
 
     def _call(
         self,
@@ -49,8 +37,7 @@ class CustomLLM(LLM):
         Returns:
             The model output as a string. Actual completions SHOULD NOT include the prompt.
         """
-        if stop is not None:
-            raise ValueError("stop kwargs are not permitted.")
+        print(prompt)
         return prompt[: self.n]
 
     def _stream(
@@ -66,7 +53,8 @@ class CustomLLM(LLM):
 
         If not implemented, the default behavior of calls to stream will be to
         fallback to the non-streaming version of the model and return
-        the output as a single chunk.
+        the output as a single chunk. Do not implement this method if the model
+        does not support streaming.
 
         Args:
             prompt: The prompt to generate from.
@@ -88,7 +76,7 @@ class CustomLLM(LLM):
 
     @property
     def _identifying_params(self) -> Dict[str, Any]:
-        """Return a dictionary of identifying parameters."""
+        """Return a dictionary of identifying parameters. """
         return {
             # The model name allows users to specify custom token counting
             # rules in LLM monitoring applications (e.g., in LangSmith users
