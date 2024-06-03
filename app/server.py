@@ -5,7 +5,10 @@ from langserve import add_routes
 
 app = FastAPI()
 
-add_routes(app, CustomChatModel(), path="/chat")
+configurable_chat_model = CustomChatModel().with_configurable_fields() if hasattr(CustomChatModel, 'with_configurable_fields') else CustomChatModel()
+add_routes(app, configurable_chat_model, path="/chat")
+
+configurable_llm = CustomLLM().with_configurable_fields() if hasattr(CustomLLM, 'with_configurable_fields') else CustomLLM()
 add_routes(app, CustomLLM())
 
 if __name__ == "__main__":

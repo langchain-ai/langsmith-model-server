@@ -6,6 +6,7 @@ from langchain_core.callbacks import (
 from langchain_core.language_models import BaseChatModel
 from langchain_core.messages import AIMessageChunk, BaseMessage, AIMessage
 from langchain_core.outputs import ChatGeneration, ChatGenerationChunk, ChatResult
+from langchain_core.runnables import ConfigurableField, Runnable
 
 
 class CustomChatModel(BaseChatModel):
@@ -18,11 +19,11 @@ class CustomChatModel(BaseChatModel):
     n: int = 5
 
     def _generate(
-        self,
-        messages: List[BaseMessage],
-        stop: Optional[List[str]] = None,
-        run_manager: Optional[CallbackManagerForLLMRun] = None,
-        **kwargs: Any,
+            self,
+            messages: List[BaseMessage],
+            stop: Optional[List[str]] = None,
+            run_manager: Optional[CallbackManagerForLLMRun] = None,
+            **kwargs: Any,
     ) -> ChatResult:
         """Override the _generate method to implement the chat model logic.
 
@@ -56,11 +57,11 @@ class CustomChatModel(BaseChatModel):
         return ChatResult(generations=[generation])
 
     def _stream(
-        self,
-        messages: List[BaseMessage],
-        stop: Optional[List[str]] = None,
-        run_manager: Optional[CallbackManagerForLLMRun] = None,
-        **kwargs: Any,
+            self,
+            messages: List[BaseMessage],
+            stop: Optional[List[str]] = None,
+            run_manager: Optional[CallbackManagerForLLMRun] = None,
+            **kwargs: Any,
     ) -> Iterator[ChatGenerationChunk]:
         """Stream the output of the model.
 
@@ -111,3 +112,11 @@ class CustomChatModel(BaseChatModel):
             # costs for the given LLM.)
             "model_name": "CustomChatModel",
         }
+
+    def with_configurable_fields(self) -> Runnable:
+        """Expose fields you want to be configurable in the playground. We will automatically add these"""
+        return self.configurable_fields(n=ConfigurableField(
+            id="n",
+            name="Num Characters",
+            description="Number of characters to return from the input prompt.",
+        ))
