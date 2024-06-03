@@ -114,9 +114,11 @@ class CustomChatModel(BaseChatModel):
         }
 
     def with_configurable_fields(self) -> Runnable:
-        """Expose fields you want to be configurable in the playground. We will automatically add these"""
+        """Expose fields you want to be configurable in the playground. We will automatically expose these to the
+        playground. If you don't want to expose any fields, you can remove this method."""
         return self.configurable_fields(n=ConfigurableField(
             id="n",
             name="Num Characters",
             description="Number of characters to return from the input prompt.",
         ))
+
