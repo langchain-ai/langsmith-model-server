@@ -6,13 +6,13 @@ from langchain_core.outputs import GenerationChunk
 
 
 class CustomLLM(LLM):
-    """A custom chat model.
+    """A custom instruct style model.
 
-    This class is a template for creating custom chat models. It is a subclass of LLM and provides
-    the methods. Read more about
+    This model returns the first n characters of the input prompt. This is intended to serve as a template for
+    your own instruct style model you may want to expose in the playground.
     """
 
-    n: int
+    n: int = 5
 
     def _call(
         self,

@@ -1,15 +1,12 @@
-from fastapi import FastAPI
-from langchain_core.messages import HumanMessage
-from langserve import add_routes
-
+from app.custom_chat_model import CustomChatModel
 from app.custom_model import CustomLLM
+from fastapi import FastAPI
+from langserve import add_routes
 
 app = FastAPI()
 
-sugma=CustomLLM(n=2)
-sugma.invoke("help")
-sugma.invoke([HumanMessage("help")])
-add_routes(app, CustomLLM(n=2))
+add_routes(app, CustomChatModel(), path="/chat")
+add_routes(app, CustomLLM())
 
 if __name__ == "__main__":
     import uvicorn
