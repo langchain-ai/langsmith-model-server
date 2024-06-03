@@ -3,7 +3,7 @@ from typing import Any, Dict, Iterator, List, Optional
 from langchain_core.callbacks.manager import CallbackManagerForLLMRun
 from langchain_core.language_models.llms import LLM
 from langchain_core.outputs import GenerationChunk
-from langchain_core.runnables import ConfigurableField
+from langchain_core.runnables import ConfigurableField, Runnable
 
 
 class CustomLLM(LLM):
@@ -90,3 +90,10 @@ class CustomLLM(LLM):
         """Get the type of language model used by this chat model. Used for logging purposes only."""
         return "custom"
 
+    def with_configurable_fields(self) -> Runnable:
+        """Expose fields you want to be configurable in the playground. We will automatically add these"""
+        return self.configurable_fields(n=ConfigurableField(
+            id="n",
+            name="Num Characters",
+            description="Number of characters to return from the input prompt.",
+        ))
