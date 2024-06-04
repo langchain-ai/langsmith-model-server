@@ -34,6 +34,34 @@ After running through the setup, this server should work out of the box with the
 poetry run uvicorn app.server:app --host 0.0.0.0 --port <port>
 ```
 
+The server should now be running
+```
+INFO:     Started server process [55114]
+INFO:     Waiting for application startup.
+
+ __          ___      .__   __.   _______      _______. _______ .______     ____    ____  _______
+|  |        /   \     |  \ |  |  /  _____|    /       ||   ____||   _  \    \   \  /   / |   ____|
+|  |       /  ^  \    |   \|  | |  |  __     |   (----`|  |__   |  |_)  |    \   \/   /  |  |__
+|  |      /  /_\  \   |  . `  | |  | |_ |     \   \    |   __|  |      /      \      /   |   __|
+|  `----./  _____  \  |  |\   | |  |__| | .----)   |   |  |____ |  |\  \----.  \    /    |  |____
+|_______/__/     \__\ |__| \__|  \______| |_______/    |_______|| _| `._____|   \__/     |_______|
+
+LANGSERVE: Playground for chain "/chat/" is live at:
+LANGSERVE:  │
+LANGSERVE:  └──> /chat/playground/
+LANGSERVE:
+LANGSERVE: Playground for chain "/" is live at:
+LANGSERVE:  │
+LANGSERVE:  └──> /playground/
+LANGSERVE:
+LANGSERVE: See all available routes at /docs/
+
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8080 (Press CTRL+C to quit)
+```
+
+By default, we expose the chat model at `/chat` and the instruct model at `/`.
+
 ## Testing
 
 To test that your server is running correctly, we have a helpful `test_server.py` script that leverages [RemoteRunnable](https://github.com/langchain-ai/langserve/blob/main/langserve/client.py#L259). To run the test, run the following command:
@@ -43,6 +71,11 @@ poetry run python test_server.py
 ```
 
 You should see a response from the server indicating that the server is running correctly.
+
+```bash
+Pinging chat model: help
+Pinging instruct model: help
+```
 
 ## Running in Docker
 
