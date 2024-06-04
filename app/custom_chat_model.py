@@ -67,8 +67,7 @@ class CustomChatModel(BaseChatModel):
         This method should be implemented if the model can generate output
         in a streaming fashion. If the model does not support streaming,
         do not implement it. In that case streaming requests will be automatically
-        handled by the _generate method. Do not implement this method if the model
-        does not support streaming.
+        handled by the _generate method.
 
         Args:
             messages: the prompt composed of a list of messages.
