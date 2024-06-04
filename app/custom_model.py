@@ -3,6 +3,7 @@ from typing import Any, Dict, Iterator, List, Optional
 from langchain_core.callbacks.manager import CallbackManagerForLLMRun
 from langchain_core.language_models.llms import LLM
 from langchain_core.outputs import GenerationChunk
+from langchain_core.runnables import ConfigurableField, Runnable
 
 
 class CustomLLM(LLM):
@@ -15,11 +16,11 @@ class CustomLLM(LLM):
     n: int = 5
 
     def _call(
-        self,
-        prompt: str,
-        stop: Optional[List[str]] = None,
-        run_manager: Optional[CallbackManagerForLLMRun] = None,
-        **kwargs: Any,
+            self,
+            prompt: str,
+            stop: Optional[List[str]] = None,
+            run_manager: Optional[CallbackManagerForLLMRun] = None,
+            **kwargs: Any,
     ) -> str:
         """Run the LLM on the given input.
 
@@ -40,11 +41,11 @@ class CustomLLM(LLM):
         return prompt[: self.n]
 
     def _stream(
-        self,
-        prompt: str,
-        stop: Optional[List[str]] = None,
-        run_manager: Optional[CallbackManagerForLLMRun] = None,
-        **kwargs: Any,
+            self,
+            prompt: str,
+            stop: Optional[List[str]] = None,
+            run_manager: Optional[CallbackManagerForLLMRun] = None,
+            **kwargs: Any,
     ) -> Iterator[GenerationChunk]:
         """Stream the LLM on the given prompt.
 
@@ -88,3 +89,12 @@ class CustomLLM(LLM):
     def _llm_type(self) -> str:
         """Get the type of language model used by this chat model. Used for logging purposes only."""
         return "custom"
+
+    def with_configurable_fields(self) -> Runnable:
+        """Expose fields you want to be configurable in the playground. We will automatically expose these to the
+        playground. If you don't want to expose any fields, you can remove this method."""
+        return self.configurable_fields(n=ConfigurableField(
+            id="n",
+            name="Num Characters",
+            description="Number of characters to return from the input prompt.",
+        ))
