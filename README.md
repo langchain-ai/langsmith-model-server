@@ -100,7 +100,7 @@ necessary for your application. Our example implementation does not require any 
 
 We also expose port 8080 with the `-p 8080:8080` option.
 
-```shellv
+```shell
 docker run -e ENV_VARIABLE=FOO -p 8080:8080 my-model-server
 ```
 
