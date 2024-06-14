@@ -100,10 +100,12 @@ necessary for your application. Our example implementation does not require any 
 
 We also expose port 8080 with the `-p 8080:8080` option.
 
-```shell
+```shellv
 docker run -e ENV_VARIABLE=FOO -p 8080:8080 my-model-server
 ```
 
 ## Using in the LangSmith Playground
 
-TODO: Add instructions for using your model server in the LangSmith Playground.
+Refer to the LangSmith documentation for more information on how to use your model in the LangSmith Playground.
+
+You can find the documentation [here](https://docs.smith.langchain.com/how_to_guides/playground/custom_endpoint).
